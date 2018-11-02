@@ -1,0 +1,44 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Todo App{% endblock %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1>Todo</h1>
+    <form class="form-inline form-group" action="{{url_for('add')}}" method="POST">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="New todo" name="todoitem">
+        </div>
+        <button type="submit" class="btn btn-primary">submit</button>
+    </form>
+    <form action="{{url_for('update')}}" method="POST">
+        {% for todo in todos %}
+        <div class="alert alert-info alert-dismissible todo" role="alert">
+            <input type="checkbox" name="{{todo.id}}" value="{{todo.id}}"> {{todo.content}}
+            <a href="{{ url_for('delete', id=todo.id) }}" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </a>
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-warning">Update list</button>
+    </form>
+    <h2>Completed</h2>
+    {% for todo in completed_todos %}
+    <div class="alert alert-danger" role="alert">
+        {{todo.content}}
+        <a href="{{ url_for('delete', id=todo.id) }}" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </a>
+    </div>
+    {% endfor %}
+
+</div>
+{%- endblock content %}
+
+
+
+
+
