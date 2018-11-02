@@ -26,14 +26,20 @@
         <button type="submit" class="btn btn-warning">Update list</button>
     </form>
     <h2>Completed</h2>
-    {% for todo in completed_todos %}
-    <div class="alert alert-danger" role="alert">
-        {{todo.content}}
-        <a href="{{ url_for('delete', id=todo.id) }}" type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </a>
-    </div>
-    {% endfor %}
+    {% if completed_todos|length > 0 %}
+        {% for todo in completed_todos %}
+        <div class="alert alert-danger" role="alert">
+            {{todo.content}}
+            <a href="{{ url_for('delete', id=todo.id) }}" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div>Nothing here</div>
+    {% endif %}
+    
+    
 
 </div>
 {%- endblock content %}
